@@ -14,9 +14,21 @@
   colorScheme = inputs.nix-colors.colorSchemes.rose-pine;
   
   home.packages = [
+    kitty
+
+    pkgs.waybar
+    (pkgs.waybar.overrideAttrs (oldAttrs: {
+      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+    })
+    )
+    libnotify
+    pkgs.mako
+
     (pkgs.nerdfonts.override { fonts = [ "DroidSansMono" ]; })
     pkgs.gh
-
+    swww
+  
+    rofi-wayland
   ];
 
   home.file = {
@@ -117,7 +129,38 @@
 
   };
 
-  programs.git = {
+
+programs.hyprland = {
+  enable = true;
+  nvidiaPatches = true;
+  xwayland.enable = true;
+};
+
+environment.sessionVariables = {
+  WLR_NO_HARDWARE_CURSORS = "1";
+  NIXOS_OZONE_WL = "1";
+};
+
+hardware = {
+    opengl.enable = true;
+
+    nvidia.modesetting.enable = true;
+};
+
+xdg.portal.enable = true;
+xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
+sound.enable = true;
+security.rtkit.enable = true;
+services.pipewire = {
+  enable = true;
+  alsa.enable = true;
+  alsa.support32Bit = true;
+  pulse.enable = true;
+  jack.enable = true;
+};
+
+programs.git = {
 	enable = true;
     userName = "PaulUlanovskij";
 	userEmail = "ulanovskijpasa@gmail.com";
