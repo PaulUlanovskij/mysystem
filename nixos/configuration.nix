@@ -63,6 +63,19 @@ variant = "";
         options = "grp:win_space_toggle";
   };
 
+environment.sessionVariables = {
+  WLR_NO_HARDWARE_CURSORS = "1";
+  NIXOS_OZONE_WL = "1";
+};
+
+hardware = {
+    opengl.enable = true;
+
+    nvidia.modesetting.enable = true;
+};
+
+
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
