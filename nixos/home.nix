@@ -47,22 +47,26 @@
 	];
 	
 	plugins = with pkgs.vimPlugins; [
-          {
-        	plugin = comment-nvim;
-        	config = toLua "require(\"Comment\").setup()";
-          }
+      {
+        plugin = comment-nvim;
+        config = toLua "require(\"Comment\").setup()";
+      }
 
-              mason-nvim
-              mason-lspconfig-nvim
-	  {
-		plugin = nvim-lspconfig;
+      mason-nvim
+      mason-lspconfig-nvim
+      {
+        plugin = nvim-lspconfig;
 		config = toLuaFile ./nvim/plugin/lsp.lua;
 	  }
 	  {
 		plugin = rose-pine;
 		config = toLuaFile ./nvim/plugin/rose-pine.lua;
 	  }
-	  
+      {
+        plugin = harpoon2;
+        config = toLuaFile ./nvim/plugin/harpoon.lua;
+      }
+
 	  neodev-nvim
 
       {
