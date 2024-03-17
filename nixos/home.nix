@@ -46,7 +46,6 @@
 		
 	];
 	
-
 	plugins = with pkgs.vimPlugins; [
           {
         	plugin = comment-nvim;
@@ -66,11 +65,15 @@
 	  
 	  neodev-nvim
 
-      nvim-cmp 
       {
         plugin = nvim-cmp;
         config = toLuaFile ./nvim/plugin/cmp.lua;
       }
+      {
+        plugin = undotree;
+        config = toLuaFile ./nvim/plugin/undotree.lua;
+      }
+
 
       {
         plugin = telescope-nvim;
