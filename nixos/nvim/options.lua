@@ -23,7 +23,7 @@ vim.opt.wrap = false
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = "~/mysystem/nixos/nvim/non-build/undodir";
+vim.opt.undodir = os.getenv("HOME") .. "/mysystem/nixos/nvim/non-build/undodir";
 vim.opt.undofile = true
 
 vim.opt.incsearch = true
