@@ -14,21 +14,21 @@
   colorScheme = inputs.nix-colors.colorSchemes.rose-pine;
   
   home.packages = [
-    kitty
+    pkgs.kitty
 
     pkgs.waybar
     (pkgs.waybar.overrideAttrs (oldAttrs: {
       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
     })
     )
-    libnotify
+    pkgs.libnotify
     pkgs.mako
 
     (pkgs.nerdfonts.override { fonts = [ "DroidSansMono" ]; })
     pkgs.gh
-    swww
+    pkgs.swww
   
-    rofi-wayland
+    pkgs.rofi-wayland
   ];
 
   home.file = {
