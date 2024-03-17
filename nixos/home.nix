@@ -14,22 +14,10 @@
   colorScheme = inputs.nix-colors.colorSchemes.rose-pine;
   
   home.packages = [
-    pkgs.kitty
-
-    pkgs.waybar
-    (pkgs.waybar.overrideAttrs (oldAttrs: {
-      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-    })
-    )
-    pkgs.libnotify
-    pkgs.mako
-
+ 
     (pkgs.nerdfonts.override { fonts = [ "DroidSansMono" ]; })
     pkgs.gh
-    pkgs.swww
-  
-    pkgs.rofi-wayland
-  ];
+ ];
 
   home.file = {
 
@@ -128,13 +116,6 @@
     '';
 
   };
-
-
-programs.hyprland = {
-  enable = true;
-  nvidiaPatches = true;
-  xwayland.enable = true;
-};
 
 xdg.portal.enable = true;
 xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
