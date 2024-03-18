@@ -8,7 +8,7 @@
   
   imports = [
 	  inputs.nix-colors.homeManagerModules.default
-	  ./features/mako.nix
+	  ../features/mako.nix
   ];
   
   colorScheme = inputs.nix-colors.colorSchemes.rose-pine;
