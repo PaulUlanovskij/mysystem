@@ -49,9 +49,11 @@
     };
 
 
+    services.devmon.enable = true;
+
     programs.hyprland = {
       enable = true;
-      xwayland.enable = true;
+      package = inputs.hyprland.packages."${pkgs.system}".hyprland;
     };
 
 
@@ -59,30 +61,31 @@
     services.xserver.displayManager.sddm.enable = true;
 
     services.printing.enable = true;
+    
+   
+sound.enable = false;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    #media-session.enable = true;
+    wireplumber.enable = true;
+
+  };
 
 
-
-    sound.enable = true;
-    security.rtkit.enable = true;
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
-    };
-
-
-
-    hardware.pulseaudio.enable = false;
-
-
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
     users.users.paviel = {
       isNormalUser = true;
       description = "paviel";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "audio" ];
       packages = with pkgs; [
         firefox
       ];
@@ -107,9 +110,16 @@
       mako
       swww
 
+      networkmanagerapplet
       rofi-wayland
-
+      pcmanfm
+      usbutils
+      udiskie
+      udisks
     ];
+services.gvfs.enable = true;
+services.udisks2.enable = true;
+
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

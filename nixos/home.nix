@@ -1,5 +1,4 @@
 { config, pkgs, inputs, ... }:
-
 {
   home.username = "paviel";
   home.homeDirectory = "/home/paviel";
@@ -8,7 +7,7 @@
   
   imports = [
 	  inputs.nix-colors.homeManagerModules.default
-	  ../features/mako.nix
+      ../features/mako.nix
   ];
   
   colorScheme = inputs.nix-colors.colorSchemes.rose-pine;
@@ -116,6 +115,8 @@
     '';
 
   };
+
+  
 
 xdg.portal.enable = true;
 xdg.portal.config.common.default = "*";
