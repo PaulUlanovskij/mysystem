@@ -16,7 +16,10 @@
  
     (pkgs.nerdfonts.override { fonts = [ "DroidSansMono" ]; })
     pkgs.gh
- ];
+    pkgs.zig
+    pkgs.zls
+
+  ];
 
   home.file = {
 
@@ -46,17 +49,31 @@
 	];
 	
 	plugins = with pkgs.vimPlugins; [
-      {
-        plugin = comment-nvim;
-        config = toLua "require(\"Comment\").setup()";
-      }
 
-      mason-nvim
-      mason-lspconfig-nvim
+      telescope-fzf-native-nvim
+      {
+        plugin = telescope-nvim;
+        config = toLuaFile ./nvim/plugin/telescope.lua;
+      }
+      telescope-ui-select-nvim
+
+      #LSP
       {
         plugin = nvim-lspconfig;
-		config = toLuaFile ./nvim/plugin/lsp.lua;
-	  }
+        config = toLuaFile ./nvim/plugin/lsp.lua;
+      }
+      cmp-nvim-lsp
+      cmp-buffer
+      cmp-path
+      cmp-cmdline
+      {
+        plugin = nvim-cmp;
+        config = toLuaFile ./nvim/plugin/cmp.lua;
+      }
+      luasnip
+      cmp_luasnip
+      #END LSP
+
 	  {
 		plugin = rose-pine;
 		config = toLuaFile ./nvim/plugin/rose-pine.lua;
@@ -69,26 +86,10 @@
 	  neodev-nvim
 
       {
-        plugin = nvim-cmp;
-        config = toLuaFile ./nvim/plugin/cmp.lua;
-      }
-      {
         plugin = undotree;
         config = toLuaFile ./nvim/plugin/undotree.lua;
       }
 
-
-      {
-        plugin = telescope-nvim;
-        config = toLuaFile ./nvim/plugin/telescope.lua;
-      }
-
-      telescope-fzf-native-nvim
-
-      cmp_luasnip
-      cmp-nvim-lsp
-
-      luasnip
       friendly-snippets
 
 
@@ -108,6 +109,10 @@
       }
 
       vim-nix
+      {
+        plugin = comment-nvim;
+        config = toLua "require(\"Comment\").setup()";
+      }
 
 	];
     extraLuaConfig = ''
@@ -137,8 +142,8 @@ programs.git = {
 	"text/plain" = [ "neovide.desktop" ];
 	"application/pdf" = [ "zathura.desktop" ];
 	"image/*" = [ "sxiv.desktop" ];
-	"video/png" = [ "mpv.desktop" ];
-	"video/jpg" = [ "mpv.desktop" ];
+	"video/png" = [ "meh.desktop" ];
+	"video/jpg" = [ "meh.desktop" ];
 	"video/*" = [ "mpv.desktop" ];
   };
 

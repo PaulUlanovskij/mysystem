@@ -85,7 +85,7 @@ sound.enable = false;
     users.users.paviel = {
       isNormalUser = true;
       description = "paviel";
-      extraGroups = [ "networkmanager" "wheel" "audio" ];
+      extraGroups = [ "networkmanager" "wheel" "audio" "storage" ];
       packages = with pkgs; [
         firefox
       ];
@@ -95,12 +95,18 @@ sound.enable = false;
 
     environment.systemPackages = with pkgs; [
       neovim 
+      obs-studio
+      discord
+      telegram-desktop
+      aseprite
+
+      ripgrep
       gitFull
       home-manager
       gnumake	
       rocmPackages.llvm.clang
       kitty
-
+      feh
       waybar
       (waybar.overrideAttrs (oldAttrs: {
         mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
@@ -112,6 +118,8 @@ sound.enable = false;
 
       networkmanagerapplet
       rofi-wayland
+
+      ntfs3g
       pcmanfm
       usbutils
       udiskie

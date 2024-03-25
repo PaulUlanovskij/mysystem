@@ -1,4 +1,3 @@
-                                                                                                                    
 local on_attach = function(_, bufnr)
 
   local bufmap = function(keys, func)
@@ -28,49 +27,17 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- no mason
--- require('lspconfig').lua_ls.setup {
---     on_attach = on_attach,
---     capabilities = capabilities,
---     Lua = {
---       workspace = { checkThirdParty = false },
---       telemetry = { enable = false },
---   },
--- }
--- mason
-require("mason").setup()
-require("mason-lspconfig").setup_handlers({
+require('lspconfig').lua_ls.setup {
+	require('neodev').setup(),
+	on_attach = on_attach,
+     capabilities = capabilities,
+     Lua = {
+       workspace = { checkThirdParty = false },
+       telemetry = { enable = false },
+   },
+ }
 
-    function(server_name)
-        require("lspconfig")[server_name].setup {
-            on_attach = on_attach,
-            capabilities = capabilities
-        }
-    end,
-
-    ["lua_ls"] = function()
-        require('neodev').setup()
-        require('lspconfig').lua_ls.setup {
-            on_attach = on_attach,
-            capabilities = capabilities,
-            settings = {
-                Lua = {
-                    workspace = { checkThirdParty = false },
-                    telemetry = { enable = false },
-                },
-            }
-        }
-    end
-
-    -- another example
-    -- ["omnisharp"] = function()
-    --     require('lspconfig').omnisharp.setup {
-    --         filetypes = { "cs", "vb" },
-    --         root_dir = require('lspconfig').util.root_pattern("*.csproj", "*.sln"),
-    --         on_attach = on_attach,
-    --         capabilities = capabilities,
-    --         enable_roslyn_analyzers = true,
-    --         analyze_open_documents_only = true,
-    --         enable_import_completion = true,
-    --     }
-    -- end,
-})
+require('lspconfig').zls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
