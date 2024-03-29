@@ -43,12 +43,22 @@
     };
 
     hardware = {
-      opengl.enable = true;
-
       nvidia.modesetting.enable = true;
     };
 
-
+nixpkgs.config.packageOverrides = pkgs: {
+    intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
+  };
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; }; # Force intel-media-driver
     services.devmon.enable = true;
 
     programs.hyprland = {
@@ -96,10 +106,11 @@ sound.enable = false;
     environment.systemPackages = with pkgs; [
       neovim 
       obs-studio
-      discord
       telegram-desktop
       aseprite
+      webcord
 
+      pfetch
       ripgrep
       gitFull
       home-manager
@@ -119,6 +130,8 @@ sound.enable = false;
       networkmanagerapplet
       rofi-wayland
 
+      slurp
+      grim
       ntfs3g
       pcmanfm
       usbutils
